@@ -11,10 +11,11 @@ const Search = () => {
     }, [searchValue])
     const fetchData = async () => {
         try {
-            let data = await fetch("https://remotive.io/api/remote-jobs?search=front%20end")
+            let data = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?title=developer`)
             if (data.ok) {
                 let response = await data.json()
-                console.log(response)
+                let jsonData = response.data
+                console.log(jsonData)
             }
 
         } catch (error) {
@@ -28,7 +29,7 @@ const Search = () => {
     return (
         <div>
             <Form inline className="justify-content-center mt-5">
-                <FormControl type="text" placeholder="Search" className=" mr-sm-2 bg-danger" value={searchValue} onChange={e => setSearchValue(e.target.value)} />
+                <FormControl type="text" placeholder="Search" className=" mr-sm-2 bg-warning" value={searchValue} onChange={e => setSearchValue(e.target.value)} />
                 {/* <Button type="submit" className="btn btn-danger" >Search</Button> */}
             </Form>
         </div>
