@@ -11,7 +11,7 @@ const Search = () => {
     }, [searchValue])
     const fetchData = async () => {
         try {
-            let data = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?title=developer`)
+            let data = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?title=developer$`)
             if (data.ok) {
                 let response = await data.json()
                 let jsonData = response.data
