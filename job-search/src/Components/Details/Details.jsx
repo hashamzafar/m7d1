@@ -48,16 +48,16 @@ class Details extends Component {
         job: null
     }
 
-    // componentDidMount = async () => {
-    //     const selectedJob = await this.props.jobs.length ? this.props.jobs.filter(job => job.id === parseInt(this.props.match.params._id)) :
-    //         this.props.companies.length ? this.props.companies?.filter(job => job._id === parseInt(this.props.match.params._id)) : this.props.category?.filter(job => job._id === parseInt(this.props.match.params._id));
-    //     if (selectedJob) {
-    //         this.setState({
-    //             job: selectedJob[0]
-    //         });
-    //         console.log(this.state.job);
-    //     }
-    // }
+    componentDidMount = async () => {
+        const selectedJob = await this.props.jobs.length ? this.props.jobs.filter(job => job.id === parseInt(this.props.match.params.id)) :
+            this.props.companies.length ? this.props.companies?.filter(job => job.id === parseInt(this.props.match.params.id)) : this.props.category?.filter(job => job.id === parseInt(this.props.match.params.id));
+        if (selectedJob) {
+            this.setState({
+                job: selectedJob[0]
+            });
+            console.log(this.state.job);
+        }
+    }
 
     render() {
         return (

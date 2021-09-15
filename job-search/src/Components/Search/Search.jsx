@@ -1,4 +1,4 @@
-import { Form, FormControl, Button } from 'react-bootstrap'
+import { Form, FormControl } from 'react-bootstrap'
 import React from 'react'
 import { useState, useEffect } from 'react'
 const Search = () => {
@@ -11,7 +11,7 @@ const Search = () => {
     }, [searchValue])
     const fetchData = async () => {
         try {
-            let data = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?title=developer$`)
+            let data = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?company=olla`)
             if (data.ok) {
                 let response = await data.json()
                 let jsonData = response.data

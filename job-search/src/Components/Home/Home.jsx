@@ -7,7 +7,7 @@ class Home extends Component {
     state = {
         jobs: [],
         companies: [],
-        search: "",
+        jobSearch: "",
         companySearch: "",
         categories: [],
         categorySearch: "",
@@ -21,14 +21,16 @@ class Home extends Component {
     searchJobs = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch(`https://remotive.io/api/remote-jobs?search=${this.state.search}`)
-            const data = await response.json()
-            this.props.jobs(data.jobs)
-            console.log(data);
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?search=${this.state.search}`)
+            const { data } = await response.json()
+            console.log(data)
+            this.props.jobs(data)
+            console.log("data jobs", data);
             if (response.ok) {
                 this.setState({
                     ...this.state,
-                    jobs: data.jobs,
+                    jobs: data,
+
                 })
             }
         } catch (error) {
@@ -40,14 +42,15 @@ class Home extends Component {
     searchCompanies = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch(`https://remotive.io/api/remote-jobs?company_name=${this.state.companySearch}`)
-            const data = await response.json()
-            this.props.companies(data.jobs)
-            console.log(data.jobs);
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?company=${this.state.categorySearch}`)
+            const { data } = await response.json()
+            console.log("search companies", data)
+            this.props.companies(data)
+
             if (response.ok) {
                 this.setState({
                     ...this.state,
-                    companies: data.jobs,
+                    companies: data,
                 })
             }
         } catch (error) {
@@ -57,13 +60,13 @@ class Home extends Component {
 
     fetchCategories = async (e) => {
         try {
-            const response = await fetch(`https://remotive.io/api/remote-jobs/categories`)
-            const data = await response.json()
-            console.log(data.jobs);
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?category=${this.state.categories}`)
+            const { data } = await response.json()
+            console.log("fetch categories", data);
             if (response.ok) {
                 this.setState({
                     ...this.state,
-                    categories: data.jobs,
+                    categories: data,
                 })
             }
         } catch (error) {
@@ -72,12 +75,12 @@ class Home extends Component {
     }
 
     searchCategories = async (e) => {
-        console.log(this.state.category);
+        // console.log(e);
         try {
-            const response = await fetch(`https://remotive.io/api/remote-jobs?category=${this.state.categorySearch}`)
-            const data = await response.json()
-            this.props.category(data.jobs)
-            console.log(data.jobs);
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?category=${this.state.categoryobs}`)
+            const { data } = await response.json()
+            this.props.category(data)
+            console.log("search categories", data);
             if (response.ok) {
                 this.setState({
                     ...this.state,
@@ -127,7 +130,7 @@ class Home extends Component {
                                 defaultValue="Select...">
                                 <option>Select...</option>
                                 {this.state.categories && this.state.categories.map(category =>
-                                    <option value={category.name}>{category.name}</option>
+                                    <option key={category._id} value={category.title}>{category.title}</option>
                                 )}
 
                             </Form.Control>
@@ -151,8 +154,8 @@ class Home extends Component {
                         </Form>
                     </Col>
                 </Row>
-                <Row classname=" job-list">
-                    <Col >
+                <Row className=" job-list">
+                    <Col>
                         <JobsList jobs={this.state.jobs.length ? this.state.jobs : this.state.companies.length ? this.state.companies : this.state.categoryJobs} />
                     </Col>
                 </Row>
