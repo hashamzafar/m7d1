@@ -9,21 +9,8 @@ import { useState } from 'react'
 import { Container } from "react-bootstrap"
 function App() {
 
-  const [searchJobs, setSearchJobs] = useState([])
-  const [searchCompanies, setSearchCompanies] = useState([])
-  const [searchCategory, setSearchCategory] = useState([])
 
-  const jobsData = (value) => {
-    setSearchJobs(value)
-  }
 
-  const companiesData = (value) => {
-    setSearchCompanies(value)
-  }
-
-  const categoryData = (value) => {
-    setSearchCategory(value)
-  }
 
   return (
     <BrowserRouter>
@@ -31,11 +18,11 @@ function App() {
       <Container>
 
 
-        <Route exact path="/" render={(routerProps) => <Home category={categoryData} companies={companiesData} jobs={jobsData} {...routerProps} />} />
+        <Route exact path="/" render={(routerProps) => <Home   {...routerProps} />} />
 
         {/* <Search /> */}
         {/* <Details /> */}
-        <Route exact path="/details/:id" render={(routerProps) => <Details category={searchCategory} companies={searchCompanies} jobs={searchJobs} {...routerProps} />} />
+        <Route exact path="/details/:id" render={(routerProps) => <Details {...routerProps} />} />
       </Container>
     </BrowserRouter>
   );

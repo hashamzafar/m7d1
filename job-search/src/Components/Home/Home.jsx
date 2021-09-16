@@ -19,16 +19,18 @@ class Home extends Component {
     }
 
     searchJobs = async (e) => {
+
         e.preventDefault()
+
         try {
-            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?search=${this.state.search}`)
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?search=${this.state.jobSearch}`)
             const { data } = await response.json()
             console.log(data)
-            this.props.jobs(data)
+
             console.log("data jobs", data);
             if (response.ok) {
                 this.setState({
-                    ...this.state,
+
                     jobs: data,
 
                 })
@@ -41,15 +43,16 @@ class Home extends Component {
 
     searchCompanies = async (e) => {
         e.preventDefault()
+        console.log({ value: e.target.value })
         try {
-            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?company=${this.state.categorySearch}`)
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?company=${this.state.companySearch}`)
             const { data } = await response.json()
             console.log("search companies", data)
-            this.props.companies(data)
+
 
             if (response.ok) {
                 this.setState({
-                    ...this.state,
+
                     companies: data,
                 })
             }
@@ -60,12 +63,12 @@ class Home extends Component {
 
     fetchCategories = async (e) => {
         try {
-            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?category=${this.state.categories}`)
-            const { data } = await response.json()
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs/categories`)
+            const data = await response.json()
             console.log("fetch categories", data);
             if (response.ok) {
                 this.setState({
-                    ...this.state,
+
                     categories: data,
                 })
             }
@@ -77,14 +80,14 @@ class Home extends Component {
     searchCategories = async (e) => {
         // console.log(e);
         try {
-            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?category=${this.state.categoryobs}`)
+            const response = await fetch(`https://strive-jobs-api.herokuapp.com/jobs?category=${e.target.value}`)
             const { data } = await response.json()
-            this.props.category(data)
+
             console.log("search categories", data);
             if (response.ok) {
                 this.setState({
-                    ...this.state,
-                    categoryJobs: data.jobs,
+
+                    categoryJobs: data,
                 })
             }
 
@@ -101,11 +104,11 @@ class Home extends Component {
                         <h4 className="py-3">Search By Job Title</h4>
                         <Form inline onSubmit={(e) => this.searchJobs(e)}>
                             <FormControl
-                                value={this.state.search}
+                                value={this.state.jobSearch}
                                 onChange={(e) =>
                                     this.setState({
-                                        ...this.state,
-                                        search: e.target.value
+
+                                        jobSearch: e.target.value
                                     })}
                                 type="text"
                                 placeholder="Search"
@@ -118,19 +121,16 @@ class Home extends Component {
                         <h4 className="py-3">Filter by Category</h4>
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Control
-                                value={this.state.categorySearch}
+
                                 onChange={(e) => {
-                                    this.setState({
-                                        ...this.state,
-                                        categorySearch: e.target.value
-                                    })
+                                    console.log(e.target.value)
                                     this.searchCategories(e)
                                 }}
                                 as="select"
                                 defaultValue="Select...">
                                 <option>Select...</option>
                                 {this.state.categories && this.state.categories.map(category =>
-                                    <option key={category._id} value={category.title}>{category.title}</option>
+                                    <option key={category} value={category}>{category}</option>
                                 )}
 
                             </Form.Control>
@@ -144,7 +144,7 @@ class Home extends Component {
                                 value={this.state.companySearch}
                                 onChange={(e) =>
                                     this.setState({
-                                        ...this.state,
+
                                         companySearch: e.target.value
                                     })}
                                 type="text"
