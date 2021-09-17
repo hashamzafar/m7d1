@@ -113,7 +113,7 @@ class Home extends Component {
                                 type="text"
                                 placeholder="Search"
                                 className=" mr-sm-2" />
-                            <Button type="submit">Submit</Button>
+                            <Button type="submit" className="btn btn-success">Submit</Button>
                         </Form>
                     </Col>
 
@@ -150,15 +150,18 @@ class Home extends Component {
                                 type="text"
                                 placeholder="Search"
                                 className=" mr-sm-2" />
-                            <Button type="submit">Submit</Button>
+                            <Button type="submit" className="btn btn-success">Submit</Button>
                         </Form>
                     </Col>
                 </Row>
+
                 <Row className=" job-list">
                     <Col>
+
                         <JobsList jobs={this.state.jobs.length ? this.state.jobs : this.state.companies.length ? this.state.companies : this.state.categoryJobs} />
                     </Col>
                 </Row>
+
             </Container>
         );
     }
