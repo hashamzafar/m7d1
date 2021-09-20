@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, Button, FormControl } from "react-bootstrap"
 import JobsList from "../JobList/JobList"
+import { removeToFavoritesAction } from "../../actions/index.js"
+import { connect } from "react-redux"
+
+
+
+
+const mapStateToProps = (state) => ({
+    favCompanies: state.favCompanies.companies
+
+})
+const mapDispatchToProps = (dispatch) => ({
+    removeFromFavCompanies: index => dispatch(removeToFavoritesAction(index))
+})
+
 
 
 class Home extends Component {
-    state = {
-        jobs: [],
-        companies: [],
-        jobSearch: "",
-        companySearch: "",
-        categories: [],
-        categorySearch: "",
-        categoryJobs: []
-    }
+    // state = {
+    //     jobs: [],
+    //     companies: [],
+    //     jobSearch: "",
+    //     companySearch: "",
+    //     categories: [],
+    //     categorySearch: "",
+    //     categoryJobs: []
+    // }
 
     componentDidMount = () => {
         this.fetchCategories()
@@ -167,4 +181,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
